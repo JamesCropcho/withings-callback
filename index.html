@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<title>Withings Code</title>
+<style>
+  :root { --bg:#fff; --fg:#111; --muted:#666; --accent:#0a7f86; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#111; --fg:#eee; --muted:#aaa; --accent:#3cc6cc; } }
+  body { background:var(--bg); color:var(--fg); font:18px/1.5 system-ui, sans-serif; margin:0; padding:24px 16px; }
+  main { max-width:560px; margin:0 auto; }
+  code { display:block; font-size:22px; word-break:break-all; padding:16px; border:2px solid var(--accent); border-radius:8px; margin:16px 0; }
+  button { font-size:20px; padding:12px 24px; border:0; border-radius:8px; background:var(--accent); color:#fff; cursor:pointer; }
+  p.small { color:var(--muted); font-size:15px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Withings authorization code</h1>
+  <code id="code">(no code in this URL)</code>
+  <button id="copy" type="button">Copy</button>
+  <p id="status"></p>
+  <p class="small">Paste it into the waiting script within 30 seconds. This page runs entirely in your browser and sends nothing anywhere.</p>
+</main>
+<script>
+  const q = new URLSearchParams(location.search);
+  const code = q.get('code'), err = q.get('error');
+  const el = document.getElementById('code'), st = document.getElementById('status');
+  if (code) el.textContent = code;
+  else if (err) el.textContent = 'Error: ' + err;
+  if (q.get('state')) st.textContent = 'state: ' + q.get('state');
+  document.getElementById('copy').onclick = () =>
+    navigator.clipboard.writeText(code || '').then(() => { st.textContent = 'Copied.'; });
+  // Drop the code from the address bar and history once shown.
+  history.replaceState(null, '', location.pathname);
+</script>
+</body>
+</html>
