@@ -1,0 +1,15 @@
+#!/bin/sh
+#
+# Refuse a commit in which CLAUDE.md, GEMINI.md or README.md is no longer a
+# symlink to AGENTS.md. Every agent reads its instructions through one of those
+# names, and some editors and agents save by replacing the file, which turns a
+# link into a separate copy that drifts unnoticed. Reads the index, so it judges
+# exactly what is about to be committed.
+
+for f in CLAUDE.md GEMINI.md README.md; do
+  if [ "$(git ls-files -s -- "$f" | cut -c1-6)" != 120000 ] ||
+     [ "$(git cat-file blob ":$f" 2>/dev/null)" != AGENTS.md ]; then
+    echo "pre-commit: $f is no longer a symlink to AGENTS.md. Merge its changes into AGENTS.md, then run: ln -sfn AGENTS.md $f && git add $f" >&2
+    exit 1
+  fi
+done

@@ -1,3 +1,6 @@
 * text=auto eol=lf
 *.html diff=html
 *.md diff=markdown
+
+# The hook scripts have no extension, so name their diff driver.
+.githooks/* diff=bash

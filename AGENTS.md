@@ -4,6 +4,14 @@ A static GitHub Pages page used as the OAuth callback URL for James's personal W
 
 Served at https://jamescropcho.github.io/withings-callback/ from `index.html` on `main`.
 
+## Git hooks
+
+`.githooks/pre-commit` refuses a commit in which `CLAUDE.md`, `GEMINI.md` or
+`README.md` is no longer a symlink to `AGENTS.md`. Claude Code turns the hooks
+on at the start of every session through a SessionStart hook in
+`.claude/settings.json`. Any other agent, or a person in a new clone, must run
+`git config core.hooksPath .githooks` once, or commits skip the check silently.
+
 ## Project memory
 
-Claude Code loads memory automatically. Other agents: this repo has no memory of its own; the related notes live in `~/projects/.claude/memory/` (see `withings-fat-loss-tracking-research-2026.md`).
+This repo has no memory of its own. Its notes live with the project that uses it, in `~/projects/weight-trend/.claude/memory/`: read that folder's `MEMORY.md` first, then `withings-fat-loss-tracking-research-2026.md` and `setup-history-2026-11.md`.
