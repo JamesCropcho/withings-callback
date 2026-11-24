@@ -13,3 +13,11 @@ for f in CLAUDE.md GEMINI.md README.md; do
     exit 1
   fi
 done
+
+# The shared Markdown check (frontmatter, links, memory index, AGENTS.md links;
+# see ~/.claude/hooks/md-check.py). It lives only on James's laptop, so clones
+# elsewhere, such as cloud sessions, skip it. Added November 24, 2026.
+c="$HOME/.claude/hooks/md-check.py"
+if [ -f "$c" ] && command -v python3 >/dev/null 2>&1; then
+  python3 -I "$c" --hook pre-commit || exit 1
+fi
